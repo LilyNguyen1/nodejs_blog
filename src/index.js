@@ -5,7 +5,16 @@ const engine = require('express-handlebars').engine
 const app = express()
 const port = 3000
 
+const route = require('./routes')
+
 app.use(express.static(path.join(__dirname, 'public')))
+
+app.use(express.urlencoded({
+  extended: true,
+}))//this is the middleware to execute data from <form> or any HTML
+
+app.use(express.json())//this is the middleware to execute date from JS library or code JS such as HTMLRequest, axios, fetch,...  
+
 
 //HTTP logger 
 app.use(morgan('combined'))
@@ -18,13 +27,9 @@ app.set('views', path.join(__dirname, 'resources/views'));
 // console.log('path: ', path.join(__dirname, 'resources/views'))
 //defaultLayout: 'main',
 
-app.get('/', (req, res) => {  
-  res.render('home')
-})
 
-app.get('/news', (req, res) => {  
-  res.render('news')
-})
+//Routes init 
+route(app)
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`)
