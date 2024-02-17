@@ -1,8 +1,16 @@
+const Course = require('../models/Course');
+const { multipleMongooseToObject } = require('../../util/mongoose')
+
 class SiteController {
     // [GET] /
-    home(req, res) {
+    home(req, res, next) {
         //we can use index or home are still ok, no problem
-        res.render('home');
+       Course.find({}) 
+        .then(courses => {
+            res.render('home', { courses: multipleMongooseToObject(courses) })
+        })
+        // .catch(err => next(err)) //can write like this, but next is a function(to handle all error, we will write at another file) we can write like next line
+        .catch(next)
     }
 
     // [GET] / search
