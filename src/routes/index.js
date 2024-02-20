@@ -4,7 +4,7 @@ const coursesRouter = require('./courses');
 
 
 function route(app) {
-    app.use('/news', newsRouter);
+    app.use('/news', newsRouter);//khi nào user vào path này thì controler này sẽ hoạt động
 
     app.use('/', siteRouter); //should put / in the end, put /news or /search before /
 

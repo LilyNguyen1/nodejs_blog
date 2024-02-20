@@ -22,7 +22,7 @@ app.use(
 app.use(express.json()); //this is the middleware to execute date from JS library or code JS such as HTMLRequest, axios, fetch,...
 
 //HTTP logger
-app.use(morgan('combined'));
+app.use(morgan('combined')); 
 
 //Template engine
 console.log(app);
