@@ -1,0 +1,26 @@
+<div class="mt-4">
+    <h3>Update Course</h3>
+    <form method="post" action="/courses/{{course._id}}?_method=PUT">
+        <div class="form-control">
+            <label for="name" class="form-label">Course's Name</label>
+            <input type="text" class="form-control" value="{{course.name}}" id="name" name="name">
+        </div>
+
+        <div class="form-control">
+            <label for="desc" class="form-label">Description</label>
+            <textarea class="form-control" id="desc" name="desc">{{course.desc}}</textarea>
+        </div>
+
+        <div class="form-control">
+            <label for="videoId" class="form-label">Video ID</label>
+            <input type="text" class="form-control" value="{{course.videoId}}" id="videoId" name="videoId">
+        </div>
+
+        <div class="form-control">
+            <label for="level" class="form-label">Level</label>
+            <input type="text" class="form-control" value="{{course.level}}" id="level" name="level">
+        </div>
+
+        <button type="submit" class="btn btn-primary mb-3">Update</button>
+    </form>
+</div>

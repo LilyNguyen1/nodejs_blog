@@ -2,6 +2,7 @@ const Course = require('../models/Course');
 const { mongooseToObject } = require('../../util/mongoose')
 
 class CourseController {
+
     // [GET] /courses/:slug
     show(req, res, next) {
         // res.send('Course Details - ' + req.params.slug);
@@ -18,15 +19,32 @@ class CourseController {
         res.render('courses/create')
     }
 
-    //POST /courses/store
+    //POST /courses/store (tạo xong thì lưu vào data)
     store(req, res, next) {
         const formData = req.body
         formData.image = `http://img.youtube.com/vi/${req.body.videoId}/sddefault.jpg`
         const course = new Course(formData)
         course.save()
             .then(() => {
-                res.redirect('/')
+                res.redirect('/')// sau khi lưu xong thì chuyển hướng về home
+            })
+            .catch(next)
+    }; 
 
+    //GET /courses/:id/edit
+    edit(req, res, next) {
+        Course.findById(req.params.id)
+            .then( course => {
+                res.render('courses/edit', { course: mongooseToObject(course)})
+            })
+            .catch(next)
+    }
+
+    //PUT /courses/:id
+    update(req, res, next) {
+        Course.updateOne( { _id: req.params.id }, req.body)//first argument is condition/filter (will update document that matches this condition/filter), second argument is object we need to change
+            .then( () => {
+                res.redirect('/me/stored-courses')
             })
             .catch(next)
     }

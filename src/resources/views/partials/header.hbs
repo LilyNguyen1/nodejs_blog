@@ -1,16 +1,26 @@
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
-  <div class="container-fluid">
+  <div class="container">
     <a class="navbar-brand" href="/">Quokka</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <div class="collapse ml-auto navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="/">Home</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/courses/create">Create New Course</a>
+        <li class="navbar-item dropdown">
+          <a href="/" class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <img class="user_avatar" src="https://ddk.1cdn.vn/2022/07/01/image.daidoanket.vn-images-upload-maictv-07012022-_3-afd8.jpg" alt="">
+            Quokka
+          </a>
+          <ul class="dropdown-menu">
+            <li class="nav-item">
+              <a class="dropdown-item" href="/courses/create">Create New Course</a>
+            </li>
+            <div class="dropdown-divider"></div>
+            <li><a class="dropdown-item" href="/me/stored-courses">My Courses</a></li>
+            <li><a class="dropdown-item" href="/me/stored/news">My News</a></li>
+            <div class="dropdown-divider"></div>
+            <li><a class="dropdown-item" href="">Log out</a></li>
+          </ul>
         </li>
       </ul>
       <form class="d-flex" role="search">

@@ -1,0 +1,28 @@
+<table class="table mt-4">
+    <thead>
+        <tr>
+        <th scope="col">#</th>
+        <th scope="col">Name</th>
+        <th scope="col">Level</th>
+        <th scope="col">Created Time</th>
+        <th scope="col">Manage</th>
+        </tr>
+    </thead>
+    {{#each courses}} 
+        <tbody>
+            <tr>
+            <th scope="row">{{ sum @index 1}}</th> {{!-- in template engine: we call helper function (sum in this case) and pass arguments, @index is first argument, and 1 is second argument --}}
+            <td>{{this.name}}</td>
+            <td>{{this.level}}</td>
+            <td>{{this.createdAt}}</td>
+            <td>
+                <a href="/courses/{{this._id}}/edit" class="btn btn-link">Edit</a>
+                <a href="" class="btn btn-link">Delete</a>
+            </td>
+
+            </tr>
+            
+        </tbody>
+    {{/each}}
+    
+</table>
