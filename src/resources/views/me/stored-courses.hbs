@@ -17,12 +17,56 @@
             <td>{{this.createdAt}}</td>
             <td>
                 <a href="/courses/{{this._id}}/edit" class="btn btn-link">Edit</a>
-                <a href="" class="btn btn-link">Delete</a>
+                <a href="" class="btn btn-link" data-id="{{this._id}}" data-bs-toggle="modal" data-bs-target="#exampleModal">Delete</a>
             </td>
-
             </tr>
-            
         </tbody>
     {{/each}}
-    
 </table>
+
+{{!-- Delete hidden form --}}
+<form name="delete-course-form" method="post">
+</form>  
+
+{{!-- Confirm delete course--}}
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="exampleModalLabel">Are you sure!?</h2>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        All your information will be delete
+      </div>
+      <div class="modal-footer">
+        <button type="button" id="btn-delete-course" class="btn btn-danger">Delete</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>//cuz only this file uses this script so we can write it here, no need to separate
+  var exampleModal = document.getElementById('exampleModal')
+  var btnDeleteCourse = document.getElementById('btn-delete-course')
+  var deleteForm = document.forms['delete-course-form']
+  var courseId;
+
+  if (exampleModal) {
+    exampleModal.addEventListener('show.bs.modal', event => {
+      // Button that triggered the modal
+      var button = event.relatedTarget
+      // Extract info from data-id attributes
+      courseId = button.getAttribute('data-id')
+      //console.log(courseId)
+    })
+  }
+
+  btnDeleteCourse.onclick = function() {
+    deleteForm.action = '/courses/' + courseId + '?_method=DELETE'
+    deleteForm.submit()
+  }
+</script>

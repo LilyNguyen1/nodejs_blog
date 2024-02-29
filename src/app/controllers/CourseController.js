@@ -48,6 +48,15 @@ class CourseController {
             })
             .catch(next)
     }
+
+    //DELETE /courses/:id
+    delete(req, res, next) {
+        Course.deleteOne( { _id: req.params.id })//first argument is condition/filter (will update document that matches this condition/filter), second argument is object we need to change
+            .then( () => {
+                res.redirect('back') //or redirect 'courses/stored-courses'
+            })
+            .catch(next)
+    }
 }
 
 module.exports = new CourseController(); 
