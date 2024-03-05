@@ -7,7 +7,9 @@ router.get('/create', courseController.create);
 router.post('/store', courseController.store);//khi nào user post(nghĩa là submit tạo 1 khoá học mới in this cáse) bằng path này thì controler này sẽ hoạt động
 router.get('/:id/edit', courseController.edit);
 router.put('/:id', courseController.update);
+router.patch('/:id/restore', courseController.restore);
 router.delete('/:id', courseController.delete);
+router.delete('/:id/force', courseController.forceDelete);
 router.get('/:slug', courseController.show);
 
 module.exports = router;

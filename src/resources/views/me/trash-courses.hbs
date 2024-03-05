@@ -1,18 +1,11 @@
 <table class="table mt-4">
-  <div>
-    <h3>My Courses</h3>
-    {{#if deletedCount}}
-    {{!-- {{#if}} GOAL: có trash thì mới hiện, không thì thôi --}}
-      <a href="/me/trash/courses">Trash ({{deletedCount}})</a>
-    {{/if}}
-  </div>
-
   <thead>
       <tr>
       <th scope="col">#</th>
       <th scope="col">Name</th>
       <th scope="col">Level</th>
       <th scope="col">Created Time</th>
+      <th scope="col">Deleted Time</th>
       <th scope="col">Manage</th>
       </tr>
   </thead>
@@ -20,32 +13,31 @@
   {{#each courses}} 
       <tbody>
           <tr>
-          <th scope="row">{{ sum @index 1}}</th> {{!-- in template engine: we call helper function (sum in this case) and pass arguments, @index is first argument, and 1 is second argument --}}
+          <th scope="row">{{ sum @index 1}}</th>
           <td>{{this.name}}</td>
           <td>{{this.level}}</td>
           <td>{{this.createdAt}}</td>
+          <td>{{this.deletedAt}}</td>
           <td>
-              <a href="/courses/{{this._id}}/edit" class="btn btn-link">Edit</a>
-              <a href="" class="btn btn-link" data-id="{{this._id}}" data-bs-toggle="modal" data-bs-target="#exampleModal">Delete</a>
+              <a href="" class="btn btn-link btn-restore" data-id="{{this._id}}">Restore</a>
+              <a href="" class="btn btn-link" data-id="{{this._id}}" data-bs-toggle="modal" data-bs-target="#exampleModal">Delete permanently</a>
           </td>
           </tr>
       </tbody>
       {{else}}
         <tr>
           <td colspan="5" class="text-center">
-            You haven't create any course yet
-            <a href="/courses/create">Click me to create new course</a>
+            Your trash is empty
+            <a href="me/stored-courses">My Courses</a>
           </td>
         </tr>
   {{/each}}
 </table>
 
-{{!-- Delete hidden form --}}
-<form name="delete-course-form" method="post">
-</form>  
+<form name="delete-course-form" method="POST"></form>  
+<form name="restore-course-form" method="POST"></form>  
 
 {{!-- Confirm delete course--}}
-
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
@@ -65,11 +57,15 @@
   </div>
 </div>
 
-<script>//cuz only this file uses this script so we can write it here, no need to separate
-  var exampleModal = document.getElementById('exampleModal')
-  var btnDeleteCourse = document.getElementById('btn-delete-course')
-  var deleteForm = document.forms['delete-course-form']
+{{!-- cuz only this file uses this script so we can write it here, no need to separate --}}
+<script>
   var courseId;
+  var exampleModal = document.getElementById('exampleModal')
+  var deleteForm = document.forms['delete-course-form']
+  var restoreForm = document.forms['restore-course-form']
+  var btnDeleteCourse = document.getElementById('btn-delete-course')
+  var restoreBtn = document.getElementsByClassName('btn-restore');
+  
 
   if (exampleModal) {
     exampleModal.addEventListener('show.bs.modal', event => {
@@ -77,12 +73,22 @@
       var button = event.relatedTarget
       // Extract info from data-id attributes
       courseId = button.getAttribute('data-id')
-      //console.log(courseId)
     })
   }
 
   btnDeleteCourse.onclick = function() {
-    deleteForm.action = '/courses/' + courseId + '?_method=DELETE'
+    deleteForm.action = '/courses/' + courseId + '/force?_method=DELETE'
     deleteForm.submit()
   }
+  
+  //Restore btn clicked
+  for (var i = 0; i < restoreBtn.length; i++) {
+    restoreBtn[i].onclick = function(e) {
+      e.preventDefault()
+      var courseId = this.dataset.id
+      restoreForm.action = '/courses/' + courseId + '/restore?_method=PATCH'
+      restoreForm.submit()
+    };
+  }
+
 </script>
